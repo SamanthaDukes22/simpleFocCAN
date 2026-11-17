@@ -15,6 +15,12 @@
 #define CAN_ID_MOTOR_CURRENT_TELEMETRY   (0x110 + MOTOR_NUMBER)
 #define CAN_ID_MOTOR_DYNAMIC_TELEMETRY   (0x120 + MOTOR_NUMBER)
 
+
+//#define CAN_ID_MOTOR_COMMAND             0x101
+//#define CAN_ID_MOTOR_CURRENT_TELEMETRY   0x111
+//#define CAN_ID_MOTOR_DYNAMIC_TELEMETRY   0x121
+
+
 // Shared variable which motor number
 extern const uint8_t MOTOR_NUMBER; 
 

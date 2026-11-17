@@ -6,4 +6,5 @@ MotorCommands motorCommands = {};
 
 MotorTelemetry motorTelemetry = {};
 
-const uint8_t MOTOR_NUMBER = 1; // I am motor 1!
+const uint8_t MOTOR_NUMBER = 2; // I am motor _!
+

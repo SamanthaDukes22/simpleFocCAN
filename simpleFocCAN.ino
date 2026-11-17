@@ -12,57 +12,42 @@ void setup() {
 
   Serial.begin(115200); // output the debug information to the serial
 
+  // Start CAN first so the ESP32 sees a healthy, ACKing bus even if the motor side fails to
+  // initialize. Move this after initMotor() later if you prefer.
+  setupCAN();
+
   if (!initMotor()) {
       Serial.println("Motor initialization failed!");
       while (true) {}
-    //Serial.println(motorSensor01.getAngle(), 6);
   }
 
-  setupCAN();
+  // initMotorDancing();
 
- // initMotorDancing();
-
- // initWatchdog();
-
+  // initWatchdog();
 }
 
 
 void loop() {
 
-
-
   receiveCANCommand();
 
   updateMotor();
 
-  //float foc_frequency = 1000000.0f / motor.loopfoc_time_us;
-  //float motion_frequency = 1000000.0f / motor.move_time_us;
+  // Sample motor data @ 100 Hz and send to ESP32
+  static uint32_t lastTelemetryUs = 0;
+  uint32_t nowUs = micros();
 
-<<<<<<< HEAD
- // static uint32_t lastTelemetryTime = 0;
+  if ((uint32_t)(nowUs - lastTelemetryUs) >= 10000U) {   // 10,000 us = 100 Hz
 
-  // Sample motor data @ 100Hz and send to ESP32 
- /* if (micros() - lastTelemetryTime >= 10000) { // 100 Hz
-=======
-  //static uint32_t lastTelemetryTime = 0;
+    lastTelemetryUs += 10000U;                            // fixed step, no drift
 
-  // Sample motor data @ 100Hz and send to ESP32 
-  //if (micros() - lastTelemetryTime >= 10000) { // 100 Hz
->>>>>>> 844840d8f64ff8e82e0bea67050e14404b34a4a0
+    // If the loop stalled for a long time, resync instead of sending a burst of catch-up frames
+    if ((uint32_t)(nowUs - lastTelemetryUs) > 50000U) {
+      lastTelemetryUs = nowUs;
+    }
 
-   //lastTelemetryTime = micros();
-
-  //    updateMotorTelemetry();
-
-   // transmitCurrentTelemetry();
-   // transmitDynamicTelemetry();
-
-<<<<<<< HEAD
+    updateMotorTelemetry();
+    transmitCurrentTelemetry();
+    transmitDynamicTelemetry();
   }
-*/
-=======
-  
-
->>>>>>> 844840d8f64ff8e82e0bea67050e14404b34a4a0
 }
- 
