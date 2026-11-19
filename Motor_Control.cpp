@@ -64,7 +64,41 @@ bool initMotor() {
   driver.dead_zone = 0.02;
 
   // power supply voltage [V]: Max DC voltage allowed - default 0.5 power supply.
-  driver.voltage_power_supply = 11.00;
+  pinMode(A17, INPUT);
+  voltSense = analogRead(A17);
+  float voltage = 11.0;
+  float a = 0.0;
+  float b = 0.0;
+  switch (MOTOR_NUMBER) {
+  case 1:
+    // Code to run if variable == label1
+    a = 0.0116;
+    b = 0.0189;
+    voltage = a * voltSense + b;
+    break;
+
+  case 2:
+    // Code to run if variable == label2
+    a = 0.0115;
+    b = 0.0184;
+    voltage = a * voltSense + b;
+    break;
+  case 3:
+    // Code to run if variable == label2
+    a = 0.0121;
+    b = 0.1286;
+    voltage = a * voltSense + b;
+    break;
+
+  default:
+    // Optional: Code to run if no cases match
+    voltage = 11.00;
+    break;
+  }
+  driver.voltage_power_supply = voltage;
+  // Debug voltage
+  Serial.print("Voltage: ");
+  Serial.println(voltage);
 
   // init driver
   Serial.print("Driver init ");
