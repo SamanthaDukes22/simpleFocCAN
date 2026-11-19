@@ -99,6 +99,11 @@ bool initMotor() {
   // Debug voltage
   Serial.print("Voltage: ");
   Serial.println(voltage);
+  if (voltage <= 9.0) {
+    Serial.println("BATTERY VOLTAGE TOO LOW!!!");
+    while (true) {
+    }
+  }
 
   // init driver
   Serial.print("Driver init ");
