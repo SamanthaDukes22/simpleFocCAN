@@ -65,7 +65,7 @@ bool initMotor() {
 
   // power supply voltage [V]: Max DC voltage allowed - default 0.5 power supply.
   pinMode(A17, INPUT);
-  voltSense = analogRead(A17);
+  float voltSense = analogRead(A17);
   float voltage = 11.0;
   float a = 0.0;
   float b = 0.0;
