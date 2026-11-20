@@ -30,7 +30,6 @@ void setup() {
 void loop() {
 
   receiveCANCommand();
-
   updateMotor();
 
   // Sample motor data @ 100 Hz and send to ESP32
